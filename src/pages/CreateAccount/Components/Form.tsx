@@ -1,17 +1,19 @@
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Box, Container, Typography } from '@mui/material'
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { registerUser } from '@/features/auth/authSlice'
 import { useAppDispatch } from '@/app/hooks'
 import AuthButton from '@/components/AuthButton/AuthButton'
 import { Variant } from '@/components/Button'
 import AuthTextField from '@/components/AuthTextField/AuthTextField'
+import Label from '@/components/Label/Label'
+import IconVisibility from '@/components/IconVisibility/IconVisibility'
 
 const Form: FC = () => {
-  const [fullName, setFullName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
+  const [fullName, setFullName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
 
@@ -36,33 +38,12 @@ const Form: FC = () => {
   }
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      height="100%"
-      className="mx-[6.25rem]"
-    >
-      <Container>
-        <Typography
-          variant="h4"
-          sx={{
-            fontSize: '22px',
-            color: '#1E1E1E',
-            fontFamily: 'Inter',
-            fontWeight: '500',
-            lineHeight: '1.6875rem',
-            marginBottom: '25px',
-          }}
-          gutterBottom
-        >
-          Create Account
-        </Typography>
+    <div className="mx-24 flex flex-col justify-center h-screen">
+      <div>
+        <h4 className="text-2xl text-textColorBlack font-medium leading-6 mb-6">Create Account</h4>
         <form>
+          <Label label="Full Name" htmlFor="username" />
           <AuthTextField
-            label="Full Name"
-            htmlFor="username"
             type="text"
             id="username"
             value={fullName}
@@ -70,9 +51,8 @@ const Form: FC = () => {
             placeholder="Enter your username.."
           />
 
+          <Label label="Email Address" htmlFor="email" />
           <AuthTextField
-            label="Email Address"
-            htmlFor="email"
             type="email"
             id="email"
             value={email}
@@ -80,26 +60,30 @@ const Form: FC = () => {
             placeholder="Enter your email.."
           />
 
+          <Label label="Password" htmlFor="password" />
           <AuthTextField
-            label="Password"
-            htmlFor="password"
             type={showPassword ? 'text' : 'password'}
             id="password"
             value={password}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             placeholder=""
-            togglePasswordVisibility={togglePasswordVisibility}
-            handleKeyDown={handleKeyDown}
-            showPassword={showPassword}
-            showEyeIcon
-          />
+            showIcon
+          >
+            <IconVisibility
+              visibleIcon={<AiFillEye className="text-gray-400 text-2xl" />}
+              invisibleIcon={<AiFillEyeInvisible className="text-grey-400 text-2xl" />}
+              toBeVisible={showPassword}
+              togglePasswordVisibility={togglePasswordVisibility}
+              handleKeyDown={handleKeyDown}
+            />
+          </AuthTextField>
 
           <AuthButton variant={Variant.Primary} onClick={handleRegister}>
             Sign Up
           </AuthButton>
         </form>
-      </Container>
-      <Container>
+      </div>
+      <div>
         <div className="flex items-center my-6">
           <div className="flex-grow h-0.5 bg-textColorBlack opacity-40 mr-4" />
           <span className="text-textColorBlack font-normal font-inter text-base">Already have an Account?</span>
@@ -108,8 +92,8 @@ const Form: FC = () => {
         <Link to="/auth/login">
           <AuthButton variant={Variant.PrimaryOutline}>Login</AuthButton>
         </Link>
-      </Container>
-    </Box>
+      </div>
+    </div>
   )
 }
 

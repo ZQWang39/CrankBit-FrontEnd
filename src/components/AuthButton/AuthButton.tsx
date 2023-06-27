@@ -1,25 +1,14 @@
-import { FC, ReactNode } from 'react'
-import Button, { Variant, Size } from '@/components/Button'
+import { FC } from 'react'
+import Button, { Size, Props as ButtonProps } from '@/components/Button'
 
-type InputProps = {
-  children: ReactNode
-  variant: Variant
+export interface InputProps extends ButtonProps {
   onClick?: () => void
 }
 
-const AuthButton: FC<InputProps> = ({ children, variant, onClick = undefined }) => (
-  <div className="w-full flex items-center justify-center">
-    <Button
-      variant={variant}
-      size={Size.Undefined}
-      type="submit"
-      block
-      className="py-3 font-bold text-base leading-6"
-      onClick={onClick}
-    >
-      {children}
-    </Button>
-  </div>
+const AuthButton: FC<InputProps> = ({ variant, children = '', onClick = undefined }) => (
+  <Button variant={variant} size={Size.Undefined} type="submit" block className="py-3 font-bold" onClick={onClick}>
+    {children}
+  </Button>
 )
 
 export default AuthButton
