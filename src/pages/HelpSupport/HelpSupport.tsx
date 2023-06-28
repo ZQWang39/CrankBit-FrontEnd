@@ -27,11 +27,8 @@ const HelpSupport: FC = () => {
           <PageContent>
             <QAHeader />
             <Table onAnswerVisibilityChange={handleAnswerVisibilityChange} />
-            
             <ContactPage />
-            
           </PageContent>
-          
         </div>
       </div>
     </Container>
@@ -39,4 +36,3 @@ const HelpSupport: FC = () => {
 };
 
 export default HelpSupport;
-
