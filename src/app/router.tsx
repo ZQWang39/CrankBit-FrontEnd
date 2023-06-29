@@ -66,7 +66,7 @@ const router = createHashRouter([
     element: <MyReportsHistory />,
   },
   {
-    path: '/report-s1',
+    path: '/report-step1',
     element: <ReportS1 />,
   },
 ])
