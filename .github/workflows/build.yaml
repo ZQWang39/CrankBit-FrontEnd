@@ -40,7 +40,7 @@ jobs:
   test-alert:
     runs-on: ubuntu-latest
     permissions: 
-      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+      security-events: write 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -144,8 +144,8 @@ jobs:
         aws s3 sync ./build s3://www.crankbit-uat.zqwang.net
 
     - name: Invalidate CloudFront cache
-    run: |
-      aws cloudfront create-invalidation --distribution-id ${{ secrets.UAT_DISTRIBUTION_ID }} --paths "/*"
+      run: |
+        aws cloudfront create-invalidation --distribution-id ${{ secrets.UAT_DISTRIBUTION_ID }} --paths "/*"
 
   build-and-deploy-prod:
     if: ${{ (github.event.inputs.environment == 'prod' || github.event_name == 'push') && github.ref == 'refs/heads/prod' }}
@@ -180,5 +180,5 @@ jobs:
         aws s3 sync ./build s3://www.crankbit.zqwang.net
 
     - name: Invalidate CloudFront cache
-    run: |
-      aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_DISTRIBUTION_ID }} --paths "/*"
+      run: |
+        aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_DISTRIBUTION_ID }} --paths "/*"
