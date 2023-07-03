@@ -104,9 +104,9 @@ jobs:
         name: crankbit-frontend-build
         path: build
 
-    - name: Deploy to UAT
+    - name: Deploy to Dev
       run: |
-        aws s3 sync ./build s3://www.crankbit-dev.zqwang.net
+        aws s3 sync ./build s3://www.dev.crankbit.com
     - name: Invalidate CloudFront cache
       run: |
         aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_DISTRIBUTION_ID }} --paths "/*"
@@ -141,7 +141,7 @@ jobs:
 
     - name: Deploy to UAT
       run: |
-        aws s3 sync ./build s3://www.crankbit-uat.zqwang.net
+        aws s3 sync ./build s3://www.uat.crankbit.com
 
     - name: Invalidate CloudFront cache
       run: |
@@ -177,7 +177,7 @@ jobs:
 
     - name: Deploy to Prod
       run: |
-        aws s3 sync ./build s3://www.crankbit.zqwang.net
+        aws s3 sync ./build s3://www.crankbit.com
 
     - name: Invalidate CloudFront cache
       run: |
