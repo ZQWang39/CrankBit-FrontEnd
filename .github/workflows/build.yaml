@@ -56,16 +56,12 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --severity-threshold=high --sarif-file-output=snyk.sarif
+        args: --severity-threshold=high 
 
-    - name: check token
-      run: |
-        echo ${{ secrets.SNYK_TOKEN }}
-
-    - name: Upload result to GitHub Code Scanning
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: snyk.sarif
+    # - name: Upload result to GitHub Code Scanning
+    #   uses: github/codeql-action/upload-sarif@v2
+    #   with:
+    #     sarif_file: snyk.sarif
 
     - name: Checking code format, testing the code and building the code
       env: 
