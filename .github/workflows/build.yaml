@@ -58,6 +58,10 @@ jobs:
       with:
         args: --severity-threshold=high --sarif-file-output=snyk.sarif
 
+    - name: check token
+      run: |
+        echo ${{ secrets.SNYK_TOKEN }}
+
     - name: Upload result to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v2
       with:
