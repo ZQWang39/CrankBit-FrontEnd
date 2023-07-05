@@ -270,6 +270,7 @@ jobs:
         npm run test
   
   build:
+    needs: test
     runs-on: ubuntu-22.04
     steps:
     - name: Checkout code
@@ -299,7 +300,7 @@ jobs:
         path: build
 
   deploy:
-    needs: test
+    needs: build
     runs-on: ubuntu-22.04
    
     steps:
