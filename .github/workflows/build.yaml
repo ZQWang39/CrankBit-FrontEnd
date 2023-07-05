@@ -152,7 +152,7 @@ jobs:
         aws cloudfront create-invalidation --distribution-id ${{ secrets.UAT_DISTRIBUTION_ID }} --paths "/*"
 
     - name: Deploy to Prod
-       if: ${{ (github.event.inputs.environment == 'prod' || github.event_name == 'push') && github.ref == 'refs/heads/prod' }}
+      if: ${{ (github.event.inputs.environment == 'prod' || github.event_name == 'push') && github.ref == 'refs/heads/prod' }}
       run: |
         aws s3 sync ./build s3://www.crankbit.com
         aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_DISTRIBUTION_ID }} --paths "/*"
