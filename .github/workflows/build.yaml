@@ -329,20 +329,20 @@ jobs:
         name: crankbit-frontend-build
         path: build
 
-    - name: Deploy to Dev and invalidate Cloudfront distribution
-      if: ${{ (github.event.inputs.environment == 'dev' || github.event_name == 'push') && github.ref == 'refs/heads/main' }}
+    - if: ${{ (github.event.inputs.environment == 'dev' || github.event_name == 'push') && github.ref == 'refs/heads/main' }}
+      name: Deploy to Dev and invalidate Cloudfront distribution
       run: |
         aws s3 sync ./build s3://www.dev.crankbit.com
         aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_DISTRIBUTION_ID }} --paths "/*"
 
-    - name: Deploy to UAT
-      if: ${{ (github.event.inputs.environment == 'uat' || github.event_name == 'push') && github.ref == 'refs/heads/uat' }}
+    - if: ${{ (github.event.inputs.environment == 'uat' || github.event_name == 'push') && github.ref == 'refs/heads/uat' }}
+      name: Deploy to UAT
       run: |
         aws s3 sync ./build s3://www.uat.crankbit.com
         aws cloudfront create-invalidation --distribution-id ${{ secrets.UAT_DISTRIBUTION_ID }} --paths "/*"
 
-    - name: Deploy to Prod
-      if: ${{ (github.event.inputs.environment == 'prod' || github.event_name == 'push') && github.ref == 'refs/heads/prod' }}
+    - if: ${{ (github.event.inputs.environment == 'prod' || github.event_name == 'push') && github.ref == 'refs/heads/prod' }}
+      name: Deploy to Prod
       run: |
         aws s3 sync ./build s3://www.crankbit.com
         aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_DISTRIBUTION_ID }} --paths "/*"
