@@ -82,7 +82,7 @@ jobs:
 
       - name: Checking code format, testing the code.
         run: |
-          npm ci
+          npm install
           npm run lint
           npm run test
   
