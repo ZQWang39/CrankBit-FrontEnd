@@ -122,6 +122,10 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-22.04
+    environment: 
+      name: ${{ github.ref_name }}
+      url: https://github.com-${{ github.ref_name }}
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -146,27 +150,18 @@ jobs:
 
     - if: ${{ (github.event.inputs.environment == 'dev' || github.event_name == 'push') && github.ref == 'refs/heads/main' }}
       name: Deploy to Dev and invalidate Cloudfront distribution
-      environment: 
-        name: main
-        url: https://github.com-main
       run: |
         aws s3 sync ./build s3://www.dev.crankbit.com
         aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_DISTRIBUTION_ID }} --paths "/*"
 
     - if: ${{ (github.event.inputs.environment == 'uat' || github.event_name == 'push') && github.ref == 'refs/heads/uat' }}
       name: Deploy to UAT
-      environment: 
-        name: uat
-        url: https://github.com-uat
       run: |
         aws s3 sync ./build s3://www.uat.crankbit.com
         aws cloudfront create-invalidation --distribution-id ${{ secrets.UAT_DISTRIBUTION_ID }} --paths "/*"
 
     - if: ${{ (github.event.inputs.environment == 'prod' || github.event_name == 'push') && github.ref == 'refs/heads/prod' }}
       name: Deploy to Prod
-      environment: 
-        name: prod
-        url: https://github.com-prod
       run: |
         aws s3 sync ./build s3://www.crankbit.com
         aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_DISTRIBUTION_ID }} --paths "/*"
