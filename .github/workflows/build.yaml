@@ -124,7 +124,7 @@ jobs:
     runs-on: ubuntu-22.04
     environment: 
       name: ${{ github.ref_name }}
-      url: https://github.com-${{ github.ref_name }}
+      url: ${{ vars.DNS_URL }}
 
     steps:
     - name: Checkout code
