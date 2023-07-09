@@ -122,6 +122,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-22.04
+    environment: 
+      name: development
+      url: https://github.com
    
     steps:
     - name: Checkout code
